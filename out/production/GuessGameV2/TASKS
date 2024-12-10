@@ -1,0 +1,59 @@
+public void askPlayerNumber() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
+    boolean validInput = false; // Promenljiva koja prati ispravnost unosa
+    while (!validInput) {
+        int playerGuess = scanner.nextInt(); // Igračev unos broja
+        if (playerGuess >= 1 && playerGuess <= difficulty.getMaxRange()) {
+            this.playerNumber = playerGuess;
+            validInput = true; // Postavlja validInput na true kada je broj ispravan
+        } else {
+            System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
+        }
+    }
+}
+///////////////
+sa ovim minjat:
+
+    public void askPlayerNumber() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
+        boolean validInput = false; // tracts  if input is correct
+        while (!validInput) {
+            int playerInput = scanner.nextInt(); // Player guesses abs
+            if (playerInput >= 1 && playerInput <= difficulty.getMaxRange()) {
+                this.playerNumber = playerInput;
+                validInput = true; // set validInput na true when correct
+            } else {
+                System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
+            }
+        }
+    }
+
+
+
+
+2.Extract enum
+DifficultyLevel selectedDifficulty = null;
+while (selectedDifficulty == null) {
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    selectedDifficulty = DifficultyLevel.EASY;
+                    break;
+                case 2:
+                    selectedDifficulty = DifficultyLevel.MEDIUM;
+                    break;
+                case 3:
+                    selectedDifficulty = DifficultyLevel.HARD;
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+            }
+        }
+        this.difficulty = selectedDifficulty;
+        generateAppNumber();
+    }
+
+
+FIX

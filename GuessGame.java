@@ -38,7 +38,6 @@ public class GuessGame {
             }
         }
         this.difficulty = selectedDifficulty;
-        generateAppNumber();
     }
 
     public void generateAppNumber() {
@@ -95,24 +94,23 @@ public class GuessGame {
 
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
-        int actualDifference = Math.abs(appNumber - playerNumber);
+        generateAppNumber();
         int attempts = 0;
 
         askPlayerNumber();
 
+        int actualDifference = Math.abs(appNumber - playerNumber);
+
+
         System.out.println("Try to guess the absolute difference between your number and mine!");
 
         attempts = guessDifference(scanner, actualDifference, attempts);
-
+        statistics.updateStatistics(attempts);
+        statistics.showStatistics();
         System.out.println("Would you like to play again? (yes/no)");
         if (scanner.nextLine().equalsIgnoreCase("yes")) {
-            statistics.updateStatistics(attempts);
-            statistics.showStatistics();
-            generateAppNumber();
             playGame();
         } else {
-            statistics.updateStatistics(attempts);
-            statistics.showStatistics();
             System.out.println("Thank you for playing! Goodbye!");
         }
     }
