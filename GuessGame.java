@@ -8,10 +8,11 @@ public class GuessGame {
     private GameStatistics statistics;
 
     public GuessGame(GameStatistics statistics) {
+        chooseDifficulty();
         this.statistics = statistics;
     }
 
-    public void displayWelcomeAndChooseDifficulty() {
+    public void chooseDifficulty() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to the Guess the Difference game!");
         System.out.println("Choose difficulty level:");
@@ -48,41 +49,71 @@ public class GuessGame {
     public void askPlayerNumber() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
-        while (true) {
-            int number = scanner.nextInt();
-            if (number >= 1 && number <= difficulty.getMaxRange()) {
-                this.playerNumber = number;
-                break;
-            } else {
-                System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
+        boolean isValid = false;
+
+        while (!isValid) {
+            try {
+                int number = Integer.parseInt(scanner.nextLine());
+
+                if (number >= 1 && number <= difficulty.getMaxRange()) {
+                    this.playerNumber = number;
+                    isValid = true; // Exit the loop once a valid number is entered
+                } else {
+                    System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             }
         }
     }
 
-    public void playGame() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Try to guess the absolute difference between your number and mine!");
+    private int playGuessingGame(Scanner scanner, int actualDifference, int attempts) {
+        System.out.print("Enter your guess for the difference: ");
 
-        int attempts = 0;
-        boolean correctGuess = false;
-
-        while (!correctGuess) {
-            System.out.print("Enter your guess for the difference: ");
-            int guessedDifference = scanner.nextInt();
-
-            int actualDifference = Math.abs(appNumber - playerNumber);
-            attempts++;
-
-            if (guessedDifference == actualDifference) {
-                System.out.println("Congratulations, you guessed correctly!");
-                correctGuess = true;
-            } else if (guessedDifference > actualDifference) {
-                System.out.println("The actual difference is smaller.");
-            } else {
-                System.out.println("The actual difference is larger.");
-            }
+        int guessedDifference;
+        try {
+            guessedDifference = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            return playGuessingGame(scanner, actualDifference, attempts); // Retry after invalid input
         }
 
-        statistics.updateStatistics(attempts);
+        attempts++;
+
+        if (guessedDifference == actualDifference) {
+            System.out.println("Congratulations, you guessed correctly!");
+        } else if (guessedDifference > actualDifference) {
+            System.out.println("The actual difference is smaller.");
+            return playGuessingGame(scanner, actualDifference, attempts); // Continue guessing
+        } else {
+            System.out.println("The actual difference is larger.");
+            return playGuessingGame(scanner, actualDifference, attempts); // Continue guessing
+        }
+
+        return attempts; // Return attempts when correct guess is made
+    }
+
+    public void playGame() {
+        Scanner scanner = new Scanner(System.in);
+        int actualDifference = Math.abs(appNumber - playerNumber);
+        int attempts = 0;
+
+        askPlayerNumber();
+
+        System.out.println("Try to guess the absolute difference between your number and mine!");
+
+        attempts = playGuessingGame(scanner, actualDifference, attempts);
+
+        System.out.println("Would you like to play again? (yes/no)");
+        if (scanner.nextLine().equalsIgnoreCase("yes")) {
+            statistics.updateStatistics(attempts);
+            statistics.showStatistics();
+            generateAppNumber();
+            playGame();
+        } else {
+            statistics.updateStatistics(attempts);
+            statistics.showStatistics();
+            System.out.println("Thank you for playing! Goodbye!");
+        }
     }
 }

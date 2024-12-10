@@ -1,0 +1,54 @@
+Welcome to the Guess the Difference game!
+Choose difficulty level:
+1. Easy (1-50)
+2. Medium (1-100)
+3. Hard (1-200)
+> 2
+
+Think of a number between 1 and 100 and enter it:
+> 120
+Please input a valid number between 1 and 100.
+> 50
+
+Try to guess the absolute difference between your number and mine!
+Enter your guess for the difference: 
+> 30
+The actual difference is larger.
+Enter your guess for the difference: 
+> 50
+The actual difference is smaller.
+Enter your guess for the difference: 
+> 45
+Congratulations, you guessed correctly!
+
+Game statistics:
+Total games played: 1
+Average attempts per game: 3.0
+Fewest attempts in a game: 3
+Most attempts in a game: 3
+
+Do you want to play again? (yes/no): 
+> yes
+///////////////////////////
+2nd round
+
+Think of a number between 1 and 100 and enter it:
+> 25
+
+Try to guess the absolute difference between your number and mine!
+Enter your guess for the difference: 
+> 20
+The actual difference is smaller.
+Enter your guess for the difference: 
+> 15
+Congratulations, you guessed correctly!
+
+Game statistics:
+Total games played: 2
+Average attempts per game: 2.5
+Fewest attempts in a game: 2
+Most attempts in a game: 3
+
+Do you want to play again? (yes/no): 
+> no
+Thank you for playing! Goodbye!
