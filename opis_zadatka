@@ -1,0 +1,42 @@
+Zadatak: 
+Opis zadatka
+Napravite aplikaciju koja omogućuje interaktivnu igru "Pogodi razliku". Cilj igre je da korisnik pokuša pogoditi apsolutnu razliku između broja koji je zamislila aplikacija i broja koji je zamislio korisnik.
+Funkcionalni zahtjevi:
+Postavljanje brojeva:
+Aplikacija nasumično generira cijeli broj u rasponu od 1 do 100.
+Korisnik također zamisli broj unutar istog raspona (1 do 100).
+Pogodi razliku:
+Korisnik pokušava pogoditi apsolutnu razliku između broja aplikacije i svog zamišljenog broja.
+Ako korisnik pogriješi:
+Aplikacija mu kaže je li njegova razlika prevelika ili premala u odnosu na stvarnu razliku.
+Proces se ponavlja dok korisnik ne pogodi točnu apsolutnu razliku.
+Statistika:
+Nakon što korisnik pogodi točan broj:
+Aplikacija prikazuje statistiku dosadašnjih igara:
+Ukupan broj odigranih igara.
+Prosječan broj pokušaja po igri.
+Najmanji broj pokušaja potreban za točno pogoditi.
+Najveci broj pokušaja potreban za točno pogoditi.
+Aplikacija korisnika pita želi li igrati ponovno.
+Završetak igre:
+Ako korisnik odluči ne igrati više, aplikacija se zatvara i zahvaljuje na igri.
+Primjer toka igre:
+Aplikacija generira broj: 45.
+Korisnik zamišlja broj: 30.
+Stvarna razlika je 15 (45 - 30 = 15).
+Korisnik unosi svoj pokušaj: 20.
+Aplikacija odgovara: "Razlika je manja od toga."
+Korisnik unosi svoj pokušaj: 12.
+Aplikacija odgovara: "Razlika je veća od toga."
+Korisnik unosi svoj pokušaj: 15.
+Aplikacija odgovara: "Čestitamo, pogodili ste!"
+Aplikacija prikazuje statistiku:
+Ukupno igara: 1.
+Prosječan broj pokušaja: 3.
+Najmanji broj pokušaja: 3.
+Aplikacija pita: "Želite li igrati ponovno? (da/ne)".
+Proširenje:
+Dodati mogućnost igranja na različitim težinama:
+Lagano (brojevi između 1 i 50).
+Srednje (brojevi između 1 i 100).
+Teško (brojevi između 1 i 200).
