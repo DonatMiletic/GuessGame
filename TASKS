@@ -1,34 +1,20 @@
-1.rješiti se while(true)
-OVAJ CODE ZAMJENITI TJ IZBRISAT
-  public void askPlayerNumber() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
-        while (true) {
-            int number = scanner.nextInt();
-            if (number >= 1 && number <= difficulty.getMaxRange()) {
-                this.playerNumber = number;
-                break;
-            } else {
-                System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
-            }
+public void askPlayerNumber() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
+    boolean validInput = false; // Promenljiva koja prati ispravnost unosa
+    while (!validInput) {
+        int playerGuess = scanner.nextInt(); // Igračev unos broja
+        if (playerGuess >= 1 && playerGuess <= difficulty.getMaxRange()) {
+            this.playerNumber = playerGuess;
+            validInput = true; // Postavlja validInput na true kada je broj ispravan
+        } else {
+            System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
         }
     }
+}
 
-ZAMJENI SA:
-    public void askPlayerNumber() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
-        boolean validInput = false; // Tracks if user input is correct
-        while (!validInput) {
-            int number = scanner.nextInt();
-            if (number >= 1 && number <= difficulty.getMaxRange()) {
-                this.playerNumber = number;
-                validInput = true; // validInput is true when number is correct
-            } else {
-                System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
-            }
-        }
-    }
+
+
 
 2.Extract enum
 DifficultyLevel selectedDifficulty = null;
