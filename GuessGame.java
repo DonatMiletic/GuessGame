@@ -67,7 +67,7 @@ public class GuessGame {
         }
     }
 
-    private int playGuessingGame(Scanner scanner, int actualDifference, int attempts) {
+    private int guessDifference(Scanner scanner, int actualDifference, int attempts) {
         System.out.print("Enter your guess for the difference: ");
 
         int guessedDifference;
@@ -75,7 +75,7 @@ public class GuessGame {
             guessedDifference = Integer.parseInt(scanner.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("Invalid input. Please enter a valid number.");
-            return playGuessingGame(scanner, actualDifference, attempts); // Retry after invalid input
+            return guessDifference(scanner, actualDifference, attempts); // Retry after invalid input
         }
 
         attempts++;
@@ -84,10 +84,10 @@ public class GuessGame {
             System.out.println("Congratulations, you guessed correctly!");
         } else if (guessedDifference > actualDifference) {
             System.out.println("The actual difference is smaller.");
-            return playGuessingGame(scanner, actualDifference, attempts); // Continue guessing
+            return guessDifference(scanner, actualDifference, attempts); // Continue guessing
         } else {
             System.out.println("The actual difference is larger.");
-            return playGuessingGame(scanner, actualDifference, attempts); // Continue guessing
+            return guessDifference(scanner, actualDifference, attempts); // Continue guessing
         }
 
         return attempts; // Return attempts when correct guess is made
@@ -102,7 +102,7 @@ public class GuessGame {
 
         System.out.println("Try to guess the absolute difference between your number and mine!");
 
-        attempts = playGuessingGame(scanner, actualDifference, attempts);
+        attempts = guessDifference(scanner, actualDifference, attempts);
 
         System.out.println("Would you like to play again? (yes/no)");
         if (scanner.nextLine().equalsIgnoreCase("yes")) {
