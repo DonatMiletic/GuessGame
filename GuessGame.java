@@ -5,10 +5,9 @@ public class GuessGame {
     private int appNumber;
     private DifficultyLevel difficulty;
     private int playerNumber;
-    private GameStatistics statistics;
+    private final GameStatistics statistics;
 
     public GuessGame(GameStatistics statistics) {
-        chooseDifficulty();
         this.statistics = statistics;
     }
 
@@ -66,52 +65,63 @@ public class GuessGame {
         }
     }
 
-    private int guessDifference(Scanner scanner, int actualDifference, int attempts) {
-        System.out.print("Enter your guess for the difference: ");
-
+    public int guessDifference(Scanner scanner, int actualDifference, int attempts) {
         int guessedDifference;
-        try {
-            guessedDifference = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a valid number.");
-            return guessDifference(scanner, actualDifference, attempts); // Retry after invalid input
+        boolean isCorrect = false;
+
+        while (!isCorrect) { // Loop until a valid guess is made
+            System.out.print("Enter your guess for the difference: ");
+
+            try {
+                guessedDifference = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                continue; // Prompt again for input
+            }
+
+            attempts++;
+
+            if (guessedDifference == actualDifference) {
+                System.out.println("Congratulations, you guessed correctly!");
+                isCorrect = true;
+            } else if (guessedDifference > actualDifference) {
+                System.out.println("The actual difference is smaller.");
+            } else {
+                System.out.println("The actual difference is larger.");
+            }
         }
 
-        attempts++;
-
-        if (guessedDifference == actualDifference) {
-            System.out.println("Congratulations, you guessed correctly!");
-        } else if (guessedDifference > actualDifference) {
-            System.out.println("The actual difference is smaller.");
-            return guessDifference(scanner, actualDifference, attempts); // Continue guessing
-        } else {
-            System.out.println("The actual difference is larger.");
-            return guessDifference(scanner, actualDifference, attempts); // Continue guessing
-        }
-
-        return attempts; // Return attempts when correct guess is made
+        return attempts; // Return the number of attempts after the correct guess
     }
 
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
-        generateAppNumber();
         int attempts = 0;
+        boolean Exit = false;
 
-        askPlayerNumber();
+        chooseDifficulty();
 
-        int actualDifference = Math.abs(appNumber - playerNumber);
+        while (!Exit) {
+            generateAppNumber();
+            askPlayerNumber();
+            System.out.println("Your number: " + playerNumber);
+            System.out.println("My number: " + appNumber);
+
+            int actualDifference = Math.abs(appNumber - playerNumber);
 
 
-        System.out.println("Try to guess the absolute difference between your number and mine!");
+            System.out.println("Try to guess the absolute difference between your number and mine!");
 
-        attempts = guessDifference(scanner, actualDifference, attempts);
-        statistics.updateStatistics(attempts);
-        statistics.showStatistics();
-        System.out.println("Would you like to play again? (yes/no)");
-        if (scanner.nextLine().equalsIgnoreCase("yes")) {
-            playGame();
-        } else {
-            System.out.println("Thank you for playing! Goodbye!");
+            attempts = guessDifference(scanner, actualDifference, attempts);
+            statistics.updateStatistics(attempts);
+            statistics.showStatistics();
+            System.out.println("Would you like to play again? (yes/no)");
+            if (scanner.nextLine().equalsIgnoreCase("yes")) {
+                continue;
+            } else {
+                System.out.println("Thank you for playing! Goodbye!");
+                Exit = true;
+            }
         }
     }
 }
