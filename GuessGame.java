@@ -17,8 +17,8 @@ public class GuessGame {
         System.out.println("Welcome to the Guess the Difference game!");
         System.out.println("Choose difficulty level:");
         System.out.println("1. Easy (" + DifficultyLevel.EASY.getMinRange() + "-" + DifficultyLevel.EASY.getMaxRange() + ")");
-        System.out.println("2. Medium (" + DifficultyLevel.EASY.getMinRange() + "-" + DifficultyLevel.EASY.getMaxRange() + ")");
-        System.out.println("3. Hard (" + DifficultyLevel.EASY.getMinRange() + "-" + DifficultyLevel.EASY.getMaxRange() + ")");
+        System.out.println("2. Medium (" + DifficultyLevel.MEDIUM.getMinRange() + "-" + DifficultyLevel.MEDIUM.getMaxRange() + ")");
+        System.out.println("3. Hard (" + DifficultyLevel.HARD.getMinRange() + "-" + DifficultyLevel.HARD.getMaxRange() + ")");
 
 
         while (this.difficulty == null) {
@@ -115,7 +115,7 @@ public class GuessGame {
             attempts = guessDifference(scanner, actualDifference, attempts);
             statistics.updateStatistics(attempts);
             statistics.showStatistics();
-            System.out.println("Would you like to play again? (yes/no)");
+            //System.out.println("Would you like to play again? (yes/no)");
 
             boolean isInvalid = true;
 
@@ -133,7 +133,8 @@ public class GuessGame {
                     System.out.println("Invalid input. Please enter 'yes' or 'no'.");
                 }
             }
-            scanner.close();
+
         }
+        scanner.close();
     }
 }
