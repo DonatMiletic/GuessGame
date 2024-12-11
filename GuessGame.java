@@ -18,25 +18,27 @@ public class GuessGame {
         System.out.println("2. Medium (1-100)");
         System.out.println("3. Hard (1-200)");
 
-        DifficultyLevel selectedDifficulty = null;
-        while (selectedDifficulty == null) {
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            switch (choice) {
-                case 1:
-                    selectedDifficulty = DifficultyLevel.EASY;
-                    break;
-                case 2:
-                    selectedDifficulty = DifficultyLevel.MEDIUM;
-                    break;
-                case 3:
-                    selectedDifficulty = DifficultyLevel.HARD;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select 1, 2, or 3.");
+
+        while (this.difficulty == null) {
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                switch (choice) {
+                    case 1:
+                        this.difficulty = DifficultyLevel.EASY;
+                        break;
+                    case 2:
+                        this.difficulty = DifficultyLevel.MEDIUM;
+                        break;
+                    case 3:
+                        this.difficulty = DifficultyLevel.HARD;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select 1, 2, or 3.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
             }
         }
-        this.difficulty = selectedDifficulty;
     }
 
     public void generateAppNumber() {
@@ -44,8 +46,7 @@ public class GuessGame {
         this.appNumber = random.nextInt(difficulty.getMaxRange()) + 1;
     }
 
-    public void askPlayerNumber() {
-        Scanner scanner = new Scanner(System.in);
+    public void askPlayerNumber(Scanner scanner) {
         System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
         boolean isValid = false;
 
@@ -97,18 +98,15 @@ public class GuessGame {
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
         int attempts = 0;
-        boolean exitGame = false;
+        boolean isRunning = true;
 
         chooseDifficulty(scanner);
 
-        while (!exitGame) {
+        while (isRunning) {
             generateAppNumber();
-            askPlayerNumber();
-            //System.out.println("Your number: " + playerNumber);
-            //System.out.println("My number: " + appNumber);
+            askPlayerNumber(scanner);
 
             int actualDifference = Math.abs(appNumber - playerNumber);
-
 
             System.out.println("Try to guess the absolute difference between your number and mine!");
 
@@ -120,7 +118,7 @@ public class GuessGame {
                 continue;
             } else {
                 System.out.println("Thank you for playing! Goodbye!");
-                exitGame = true;
+                isRunning = False;
                 scanner.close();
             }
         }
