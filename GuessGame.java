@@ -16,9 +16,9 @@ public class GuessGame {
     public void chooseDifficulty(Scanner scanner) {
         System.out.println("Welcome to the Guess the Difference game!");
         System.out.println("Choose difficulty level:");
-        System.out.println("1. Easy (1-50)");
-        System.out.println("2. Medium (1-100)");
-        System.out.println("3. Hard (1-200)");
+        System.out.println("1. Easy (" + DifficultyLevel.EASY.getMinRange() + "-" + DifficultyLevel.EASY.getMaxRange() + ")");
+        System.out.println("2. Medium (" + DifficultyLevel.EASY.getMinRange() + "-" + DifficultyLevel.EASY.getMaxRange() + ")");
+        System.out.println("3. Hard (" + DifficultyLevel.EASY.getMinRange() + "-" + DifficultyLevel.EASY.getMaxRange() + ")");
 
 
         while (this.difficulty == null) {
@@ -48,18 +48,18 @@ public class GuessGame {
     }
 
     public void askPlayerNumber(Scanner scanner) {
-        System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
-        boolean isntValid = true;
+        System.out.println("Think of a number between " + difficulty.getMinRange() + " and " + difficulty.getMaxRange() + " and enter it:");
+        boolean isInvalid = true;
 
-        while (isntValid) {
+        while (isInvalid) {
             try {
                 int number = Integer.parseInt(scanner.nextLine());
 
-                if (number >= 1 && number <= difficulty.getMaxRange()) {
+                if (number >= difficulty.getMinRange() && number <= difficulty.getMaxRange()) {
                     this.playerNumber = number;
-                    isntValid = false; // Exit the loop once a valid number is entered
+                    isInvalid = false; // Exit the loop once a valid number is entered
                 } else {
-                    System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
+                    System.out.println("Please input a valid number between " + difficulty.getMinRange() + " and " + difficulty.getMaxRange() + ".");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid number.");
@@ -69,9 +69,9 @@ public class GuessGame {
 
     public int guessDifference(Scanner scanner, int actualDifference, int attempts) {
         int guessedDifference;
-        boolean isCorrect = false;
+        boolean isIncorrect = true;
 
-        while (!isCorrect) { // Loop until a valid guess is made
+        while (isIncorrect) { // Loop until a valid guess is made
             System.out.print("Enter your guess for the difference: ");
 
             try {
@@ -85,7 +85,7 @@ public class GuessGame {
 
             if (guessedDifference == actualDifference) {
                 System.out.println("Congratulations, you guessed correctly!");
-                isCorrect = true;
+                isIncorrect = false;
             } else if (guessedDifference > actualDifference) {
                 System.out.println("The actual difference is smaller.");
             } else {
@@ -116,11 +116,22 @@ public class GuessGame {
             statistics.updateStatistics(attempts);
             statistics.showStatistics();
             System.out.println("Would you like to play again? (yes/no)");
-            if (scanner.nextLine().equalsIgnoreCase("no")) {
-                System.out.println("Thank you for playing! Goodbye!");
-                isRunning = false;
-            } else if (!scanner.nextLine().equalsIgnoreCase("yes")) {
-                System.out.println("Please enter yes or no.");
+
+            boolean isInvalid = true;
+
+            while (isInvalid) {
+                System.out.println("Would you like to play again? (yes/no)");
+                String response = scanner.nextLine().trim().toLowerCase();
+
+                if (response.equals("yes")) {
+                    isInvalid = false; // Exit the input validation loop
+                } else if (response.equals("no")) {
+                    System.out.println("Thank you for playing! Goodbye!");
+                    isRunning = false; // Stop the game loop
+                    isInvalid = false; // Exit the input validation loop
+                } else {
+                    System.out.println("Invalid input. Please enter 'yes' or 'no'.");
+                }
             }
             scanner.close();
         }
