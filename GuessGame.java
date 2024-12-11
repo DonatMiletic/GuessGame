@@ -49,7 +49,7 @@ public class GuessGame {
 
     public void askPlayerNumber(Scanner scanner) {
         System.out.println("Think of a number between 1 and " + difficulty.getMaxRange() + " and enter it:");
-        boolean isntValid = false;
+        boolean isntValid = true;
 
         while (isntValid) {
             try {
@@ -57,7 +57,7 @@ public class GuessGame {
 
                 if (number >= 1 && number <= difficulty.getMaxRange()) {
                     this.playerNumber = number;
-                    isntValid = true; // Exit the loop once a valid number is entered
+                    isntValid = false; // Exit the loop once a valid number is entered
                 } else {
                     System.out.println("Please input a valid number between 1 and " + difficulty.getMaxRange() + ".");
                 }
@@ -104,6 +104,7 @@ public class GuessGame {
         chooseDifficulty(scanner);
 
         while (isRunning) {
+
             generateAppNumber();
             askPlayerNumber(scanner);
 
@@ -115,11 +116,11 @@ public class GuessGame {
             statistics.updateStatistics(attempts);
             statistics.showStatistics();
             System.out.println("Would you like to play again? (yes/no)");
-            if (scanner.nextLine().equalsIgnoreCase("yes")) {
-                continue;
-            } else {
+            if (scanner.nextLine().equalsIgnoreCase("no")) {
                 System.out.println("Thank you for playing! Goodbye!");
                 isRunning = false;
+            } else if (!scanner.nextLine().equalsIgnoreCase("yes")) {
+                System.out.println("Please enter yes or no.");
             }
             scanner.close();
         }
