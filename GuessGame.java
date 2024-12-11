@@ -7,12 +7,11 @@ public class GuessGame {
     private int playerNumber;
     private final GameStatistics statistics;
 
-    public GuessGame(GameStatistics statistics) {
-        this.statistics = statistics;
+    public GuessGame() {
+        this.statistics = new GameStatistics();
     }
 
-    public void chooseDifficulty() {
-        Scanner scanner = new Scanner(System.in);
+    public void chooseDifficulty(Scanner scanner) {
         System.out.println("Welcome to the Guess the Difference game!");
         System.out.println("Choose difficulty level:");
         System.out.println("1. Easy (1-50)");
@@ -22,6 +21,7 @@ public class GuessGame {
         DifficultyLevel selectedDifficulty = null;
         while (selectedDifficulty == null) {
             int choice = scanner.nextInt();
+            scanner.nextLine();
             switch (choice) {
                 case 1:
                     selectedDifficulty = DifficultyLevel.EASY;
@@ -97,15 +97,15 @@ public class GuessGame {
     public void playGame() {
         Scanner scanner = new Scanner(System.in);
         int attempts = 0;
-        boolean Exit = false;
+        boolean exitGame = false;
 
-        chooseDifficulty();
+        chooseDifficulty(scanner);
 
-        while (!Exit) {
+        while (!exitGame) {
             generateAppNumber();
             askPlayerNumber();
-            System.out.println("Your number: " + playerNumber);
-            System.out.println("My number: " + appNumber);
+            //System.out.println("Your number: " + playerNumber);
+            //System.out.println("My number: " + appNumber);
 
             int actualDifference = Math.abs(appNumber - playerNumber);
 
@@ -120,7 +120,8 @@ public class GuessGame {
                 continue;
             } else {
                 System.out.println("Thank you for playing! Goodbye!");
-                Exit = true;
+                exitGame = true;
+                scanner.close();
             }
         }
     }
